@@ -3,14 +3,18 @@
 #
 class minecraft::package (
 
-  $base_url  = $minecraft::params::base_url,
-  $version   = $minecraft::params::version,
-  $user_home = $minecraft::params::user_home,
+  $base_url  = $::minecraft::params::base_url,
+  $group     = $::minecraft::params::group,
+  $user      = $::minecraft::params::user,
+  $user_home = $::minecraft::params::user_home,
+  $version   = $::minecraft::params::version,
 
 	) inherits ::minecraft::params {
 
   file { "${user_home}/${version}":
     ensure => directory,
+    owner  => $user,
+    group  => $group,
   }
 
   package { 'wget':

@@ -10,7 +10,10 @@ class minecraft::user(
 	) inherits ::minecraft::params{
 
   file { $user_home:
-    ensure => directory,
+    ensure  => directory,
+    owner   => $user,
+    group   => $group,
+    require => User["${user}"],
   }
 
   group { $group:
@@ -24,7 +27,7 @@ class minecraft::user(
     shell   => '/bin/bash',
     require => [
       Group[$group],
-      File[$user_home],
+#      File[$user_home],
     ]
   }
 }

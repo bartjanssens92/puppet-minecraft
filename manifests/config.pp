@@ -12,22 +12,29 @@
 #
 class minecraft::config (
 
+  $eula      = $::minecraft::params::eula,
+  $group     = $::minecraft::params::group,
+  $user      = $::minecraft::params::user,
   $user_home = $minecraft::params::user_home,
   $version   = $minecraft::params::version,
 
-	){
+	) inherits ::minecraft::params {
 
   include minecraft::params
 
   file { "${user_home}/${version}/eula.txt":
-    ensure  => present,
     content => template('minecraft/eula.txt.erb'),
+    ensure  => present,
+    group  => $group,
+    owner  => $user,
     require => File["${user_home}/${version}"]
   }
 
-    file { "${user_home}/${version}/server.properties":
-    ensure  => present,
+  file { "${user_home}/${version}/server.properties":
     content => template('minecraft/server.properties.erb'),
+    ensure  => present,
+    group   => $group,
+    owner   => $user,
     require => File["${user_home}/${version}"]
   }
 }

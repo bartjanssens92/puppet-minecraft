@@ -7,6 +7,7 @@ class minecraft (
   $allow_nether                  = $::minecraft::params::allow_nether,
   $announce_player_achievements  = $::minecraft::params::announce_player_achievements,
   $base_url                      = $::minecraft::params::base_url,
+  $cpu_count                     = $::minecraft::params::cpu_count,
   $difficulty                    = $::minecraft::params::difficulty,
   $enable_command_block          = $::minecraft::params::enable_command_block,
   $enable_query                  = $::minecraft::params::enable_query,
@@ -23,9 +24,11 @@ class minecraft (
   $level_seed                    = $::minecraft::params::level_seed,
   $level_type                    = $::minecraft::params::level_type,
   $max_build_height              = $::minecraft::params::max_build_height,
+  $max_heap                      = $::minecraft::params::max_heap,
   $max_players                   = $::minecraft::params::max_players,
   $max_tick_time                 = $::minecraft::params::max_tick_time,
   $max_world_size                = $::minecraft::params::max_world_size,
+  $min_heap                      = $::minecraft::params::min_heap,
   $motd                          = $::minecraft::params::motd,
   $network_compression_threshold = $::minecraft::params::network_compression_threshold,
   $online_mode                   = $::minecraft::params::online_mode,
@@ -35,6 +38,7 @@ class minecraft (
   $resource_pack                 = $::minecraft::params::resource_pack,
   $resource_pack_hash            = $::minecraft::params::resource_pack_hash,
   $server_ip                     = $::minecraft::params::server_ip,
+  $server_options                = $::minecraft::params::server_options,
   $server_port                   = $::minecraft::params::server_port,
   $service                       = $::minecraft::params::service,
   $snooper_enabled               = $::minecraft::params::snooper_enabled,
@@ -57,8 +61,10 @@ class minecraft (
   ->
   class { 'minecraft::package':
     base_url  => $minecraft::params::base_url,
-    version   => $version,
+    group     => $group,
+    user      => $user,
     user_home => $user_home,
+    version   => $version,
   }
   ->
   class { 'minecraft::java':
@@ -66,7 +72,17 @@ class minecraft (
   }
   ->
   class { 'minecraft::config':
-    user_home  => $user_home,
-    version    => $version,
+    eula      => $eula,
+    group     => $group,
+    user      => $user,
+    user_home => $user_home,
+    version   => $version,
+  }
+  ->
+  class { 'minecraft::service':
+    user      => $user,
+    user_home => $user_home,
+    service   => $service,
+    version   => $version,
   }
 }
