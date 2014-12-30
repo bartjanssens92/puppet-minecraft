@@ -78,6 +78,7 @@ class minecraft::config (
     group   => $group,
     owner   => $user,
     require => File["${user_home}/${version}"],
+    replace => false,
     notify  => Service["minecraft-${version}"],
   }
 }
