@@ -12,9 +12,9 @@
 #
 class minecraft::config (
 
-  $eula      = $::minecraft::params::eula,
-  $group     = $::minecraft::params::group,
-  $user      = $::minecraft::params::user,
+  $eula      = $minecraft::params::eula,
+  $group     = $minecraft::params::group,
+  $user      = $minecraft::params::user,
   $user_home = $minecraft::params::user_home,
   $version   = $minecraft::params::version,
 

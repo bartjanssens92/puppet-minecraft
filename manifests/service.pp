@@ -3,10 +3,10 @@
 #
 class minecraft::service (
 
-  $user      = $::minecraft::params::user,
-  $user_home = $::minecraft::params::user_home,
-  $service   = $::minecraft::params::service,
-  $version   = $::minecraft::params::version,
+  $user      = $minecraft::params::user,
+  $user_home = $minecraft::params::user_home,
+  $service   = $minecraft::params::service,
+  $version   = $minecraft::params::version,
 
 	) inherits ::minecraft::params {
 

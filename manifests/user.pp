@@ -3,9 +3,9 @@
 #
 class minecraft::user(
 
-  $user      = $::minecraft::params::user,
-  $user_home = $::minecraft::params::user_home,
-  $group     = $::minecraft::params::group,
+  $user      = $minecraft::params::user,
+  $user_home = $minecraft::params::user_home,
+  $group     = $minecraft::params::group,
   
 	) inherits ::minecraft::params{
 
