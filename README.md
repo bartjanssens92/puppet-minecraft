@@ -3,13 +3,15 @@ Minecraft puppet module
 
 This intention of this module is that it should be able to manage multiple minecraft servers, each with a different config.
 
-Parameters:
+Parameters
+----------
+
 All the usual parameters that can be found in the server.properties file with the only difference that the '-' are changed to '_'.
 Other not so usual parameters:
 - base_url:
   This is the url that is used to download the minecraft_server.jar file.
 - eula:
-  This is the value in the eula.txt file, it is default set to 'false' as by changing the setting below to TRUE you are indicating your agreement to our EULA (https://account.mojang.com/documents/minecraft_eula).
+  This is the value in the eula.txt file, it is default set to 'false' as by changing the setting to TRUE you are indicating your agreement to our EULA (https://account.mojang.com/documents/minecraft_eula).
 - group:
   The group to run the minecraft server under.
   Values: 'true','false'.
@@ -20,7 +22,8 @@ Other not so usual parameters:
 - version:
   The minecraft version to install.
 
-Example uses:
+Example uses
+------------
 
 The most simple usecase:
 As the port and the version need to be defined.
@@ -53,3 +56,9 @@ minecraft { 'minecraft-1.8.1':
   version     => '1.8.1',
 }
 ```
+
+To do's
+-------
+
+- Add support for the other config files.
+- Make the config version dependent. 
