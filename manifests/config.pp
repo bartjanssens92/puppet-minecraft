@@ -16,6 +16,7 @@ define minecraft::config (
   $allow_nether                  = true,
   $announce_player_achievements  = true,
   $base_url                      = 'https://s3.amazonaws.com/Minecraft.Download/versions/',
+  $dir,
   $cpu_count                     = '1',
   $difficulty                    = '1',
   $enable_command_block          = false,
@@ -63,20 +64,20 @@ define minecraft::config (
 
 	){
 
-  file { "${user_home}/${version}/eula.txt":
+  file { "${user_home}/${dir}/eula.txt":
     content => template('minecraft/eula.txt.erb'),
     ensure  => present,
     group  => $group,
     owner  => $user,
-    require => File["${user_home}/${version}"]
+    require => File["${user_home}/${dir}"]
   }
 
-  file { "${user_home}/${version}/server.properties":
+  file { "${user_home}/${dir}/server.properties":
     content => template('minecraft/server.properties.erb'),
     ensure  => present,
     group   => $group,
     owner   => $user,
-    require => File["${user_home}/${version}"],
+    require => File["${user_home}/${dir}"],
     replace => false,
     notify  => Service["minecraft-${version}"],
   }

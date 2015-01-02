@@ -38,8 +38,8 @@
 # minecraft { 'minecraft-1.8.1':
 #   group       => 'somegroup',
 #   user        => 'someuser',
-#   user_home   => '/opt/minecraft'
-#   server_port => '256656',
+#   user_home   => '/opt/minecraft',
+#   server_port => '25565',
 #   version     => '1.8.1',
 # }
 #
@@ -96,29 +96,31 @@ define minecraft (
 
   $service_name = $title
 
-  minecraft::user { "minecraft-user-${version}-${user}":
+  minecraft::user { "minecraft-user-${title}":
     user      => $user,
     user_home => $user_home,
     group     => $group,
   }
   ->
-  minecraft::package { "minecraft-package-${version}":
+  minecraft::package { "minecraft-package-${title}":
     base_url  => $base_url,
+    dir       => $service_name,
     group     => $group,
     user      => $user,
     user_home => $user_home,
     version   => $version,
   }
   ->
-  minecraft::java { "minecraft-java-${version}-${java_version}":
+  minecraft::java { "minecraft-java-${title}":
     java_version => $java_version,
   }
   ->
-  minecraft::config { "minecraft-config-${version}":
+  minecraft::config { "minecraft-config-${title}":
     allow_flight                  => $allow_flight,
     allow_nether                  => $allow_nether,
     announce_player_achievements  => $announce_player_achievements,
     base_url                      => $base_url,
+    dir                           => $service_name,
     cpu_count                     => $cpu_count,
     difficulty                    => $difficulty,
     enable_command_block          => $enable_command_block,
@@ -164,7 +166,7 @@ define minecraft (
     white_list                    => $white_list,
   }
   ->
-  minecraft::service { "minecraft-service-${version}":
+  minecraft::service { "minecraft-service-${title}":
     service      => $service,
     service_name => $service_name,
     user         => $user,

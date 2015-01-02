@@ -4,12 +4,13 @@
 #
 define minecraft::service (
 
-  $group     = 'minecraft',
-  $service   = 'running',
+  $group        = 'minecraft',
+  $java_version = 'java-1.7.0-openjdk',
+  $service      = 'running',
   $service_name,
-  $user      = 'minecraft',
-  $user_home = '/home/minecraft',
-  $version   = '1.8.1',
+  $user         = 'minecraft',
+  $user_home    = '/home/minecraft',
+  $version      = '1.8.1',
 
 	){
 
@@ -23,6 +24,7 @@ define minecraft::service (
     require => [
       Package['screen'],
       File["/etc/init.d/${service_name}"],
+      Package["$java_version"],
     ]
   }
 	

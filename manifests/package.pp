@@ -5,6 +5,7 @@
 define minecraft::package (
 
   $base_url  = 'https://s3.amazonaws.com/Minecraft.Download/versions/',
+  $dir,
   $group     = 'minecraft',
   $user      = 'minecraft',
   $user_home = '/home/minecraft',
@@ -14,7 +15,7 @@ define minecraft::package (
 
   $packages = ['screen','wget']
 
-  file { "${user_home}/${version}":
+  file { "${user_home}/${dir}":
     ensure => directory,
     owner  => $user,
     group  => $group,
@@ -32,11 +33,11 @@ define minecraft::package (
     }
   }
 
-  exec { "download-minecarft-${version}" :
+  exec { "download-minecarft-${version} to ${dir}" :
     command => "wget --no-check-certificate ${base_url}${version}/minecraft_server.${version}.jar",
-    cwd     => "${user_home}/${version}",
-    require => [File["${user_home}/${version}"], Package['wget']],
+    cwd     => "${user_home}/${dir}",
+    require => [File["${user_home}/${dir}"], Package['wget']],
     path    => ['/usr/bin', '/usr/sbin', '/bin'],
-    onlyif  => "test ! -f ${user_home}/${version}/minecraft_server.${version}.jar -o ! -d ${user_home}/${version}",
+    onlyif  => "test ! -f ${user_home}/${dir}/minecraft_server.${version}.jar -o ! -d ${user_home}/${dir}",
   }
 }
