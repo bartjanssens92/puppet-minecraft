@@ -1,15 +1,18 @@
 # Class minecraft::package
 # This class gets the .jar file for the minecraft server from the official website.
+# and gets the other packages, wget and screen.
 #
-class minecraft::package (
+define minecraft::package (
 
-  $base_url  = $::minecraft::params::base_url,
-  $group     = $::minecraft::params::group,
-  $user      = $::minecraft::params::user,
-  $user_home = $::minecraft::params::user_home,
-  $version   = $::minecraft::params::version,
+  $base_url  = 'https://s3.amazonaws.com/Minecraft.Download/versions/',
+  $group     = 'minecraft',
+  $user      = 'minecraft',
+  $user_home = '/home/minecraft',
+  $version   = '1.8.1',
 
-	) inherits ::minecraft::params {
+	){
+
+  $packages = ['screen','wget']
 
   file { "${user_home}/${version}":
     ensure => directory,
@@ -17,8 +20,16 @@ class minecraft::package (
     group  => $group,
   }
 
-  package { 'wget':
-    ensure => present,
+  if !defined(Package['wget']) {
+    package { 'wget':
+      ensure => present,
+    }
+  }
+
+  if !defined(Package['screen']) {
+    package { 'screen':
+      ensure => present,
+    }
   }
 
   exec { "download-minecarft-${version}" :
